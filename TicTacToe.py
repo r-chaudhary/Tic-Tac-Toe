@@ -20,6 +20,7 @@ EXIT = False
 
 
 class TicTacToe(UI.ScreenConfigure):
+
     def __init__(self):
         super().__init__()
         
@@ -31,6 +32,7 @@ class TicTacToe(UI.ScreenConfigure):
     # Summary of playWithCPU method:
     #   The playWithCPU, extends the feature of Tic Tac Toe game
     #   to play with a human and CPU 
+
     def playWithCPU(self):
 
         # Get Human Value [X/O]
@@ -38,12 +40,17 @@ class TicTacToe(UI.ScreenConfigure):
         sel = input()
 
         # Initialize Players
-        if sel == 'X':
+        if sel.upper() == 'X':
             Player1 = Player('X')
             Player2 = Player('O','COMPUTER')
-        else:
+        elif sel.upper() == 'O':
             Player1 = Player('X','COMPUTER')
             Player2 = Player('O')
+        else:
+            print("{}{:<40}".format(' '*(int(self.columns/2)-20), "Invalid Input"))
+            print("{}{:<40}".format(' '*(int(self.columns/2)-20), "Enter to Main Menu"), end="")
+            input()
+            return
 
         # Initialize Board    
         Board = UI.UI()
@@ -53,7 +60,13 @@ class TicTacToe(UI.ScreenConfigure):
 
         # Start Playing!  
         G.play()
-
+   
+    #
+    # playWithHuman(self)
+    # 
+    # Summary of playWithHuman method:
+    #   The playWithHuman, enables the functionality of 2 human
+    #   player to play.
 
     def playWithHuman(self):
 
@@ -69,36 +82,40 @@ class TicTacToe(UI.ScreenConfigure):
 
         # Start Playing!
         G.play()
-
+    
     def exit(self):
         global EXIT
-
         # SET EXIT to True 
         EXIT = True
     
-    # Main Menu
-    def MainMenu(self):
-        
-        # Clear Terminal
-        os.system(self.clrcmd)
+    # 
+    # MainMenu(self)
+    # 
+    # Summary of MainMenu method:
+    #   The MainMenu is then Menu of the game. It implements
+    #   the code to start and flow of the game.
 
-        # Skip n lines to make everything appear in center
-        print("\n"*(int(self.rows/2)-7))
+    def MainMenu(self):
+        # Clear Terminal
+        self.CLRCSR()
 
         # Print Menu Command Text
         print("{}{:^40}".format(' '*(int(self.columns/2)-20), "Welcome to Tic Tac Toe"))
         print("{}{:<40}".format(' '*(int(self.columns/2)-20), "1] Play with CPU"))
         print("{}{:<40}".format(' '*(int(self.columns/2)-20), "2] Play with Human"))
-        print("{}{:<40}".format(' '*(int(self.columns/2)-20), "3]Exit"))
+        print("{}{:<40}".format(' '*(int(self.columns/2)-20), "3] Exit"))
         print("{}{:<40}".format(' '*(int(self.columns/2)-20), self.prompt), end="")
 
         # Get user input
-        opt = int(input())
+        opt = input()
 
-        if   opt == 1 : self.playWithCPU()
-        elif opt == 2 : self.playWithHuman()
-        elif opt == 3 : self.exit()
+        if   opt == '1' : self.playWithCPU()
+        elif opt == '2' : self.playWithHuman()
+        elif opt == '3' : self.exit()
+        
 
 # Start Tic Tac Toe Game
 while EXIT is False:
     T = TicTacToe()
+    # Halt Result
+    # ainput()
